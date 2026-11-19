@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F5F9"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- メインカード -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:elevation="4dp"
+            android:orientation="vertical">
+
+            <!-- ヘッダー -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#0D9488"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="進数変換・計算電卓"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="2・8・10・16進数の変換と、進数をまたいだ正確な計算に対応"
+                    android:textColor="#CCFBF1"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- モード切り替えタブ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#E2E8F0"
+                android:orientation="horizontal"
+                android:padding="6dp">
+
+                <Button
+                    android:id="@+id/btn_mode_convert"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
+                    android:text="進数変換"
+                    android:textColor="#0F766E"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_mode_calc"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#E2E8F0"
+                    android:text="進数計算"
+                    android:textColor="#64748B"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- ==================== パネル1: 進数変換 ==================== -->
+            <LinearLayout
+                android:id="@+id/panel_convert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:text="変換元の進数"
+                            android:textColor="#475569"
+                            android:textSize="13sp" />
+
+                        <Spinner
+                            android:id="@+id/spinner_from_base"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="#F8FAFC" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_swap"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="52dp"
+                        android:layout_height="48dp"
+                        android:layout_marginHorizontal="8dp"
+                        android:backgroundTint="#F1F5F9"
+                        android:text="⇄"
+                        android:textColor="#334155"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:text="変換先の進数"
+                            android:textColor="#475569"
+                            android:textSize="13sp" />
+
+                        <Spinner
+                            android:id="@+id/spinner_to_base"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="#F8FAFC" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="変換する数値"
+                    android:textColor="#475569"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/edit_num_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="#F8FAFC"
+                    android:hint="例：101.101、-42、FF.A"
+                    android:imeOptions="actionDone"
+                    android:inputType="textVisiblePassword|textCapCharacters"
+                    android:paddingHorizontal="14dp"
+                    android:singleLine="true"
+                    android:textColor="#1E293B"
+                    android:textSize="18sp"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:id="@+id/text_convert_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:minHeight="18dp"
+                    android:textColor="#EF4444"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="整数・小数・負数に対応。小数点は1個まで使用できます。"
+                    android:textColor="#94A3B8"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btn_convert"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#0D9488"
+                    android:text="変換する"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- ==================== パネル2: 進数計算 ==================== -->
+            <LinearLayout
+                android:id="@+id/panel_calc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:visibility="gone">
+
+                <!-- 第1項 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="第1項（進数 / 数値）"
+                    android:textColor="#475569"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/spinner_calc_base_a"
+                        android:layout_width="115dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="#F8FAFC" />
+
+                    <EditText
+                        android:id="@+id/edit_calc_a"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:background="#F8FAFC"
+                        android:imeOptions="actionNext"
+                        android:inputType="textVisiblePassword|textCapCharacters"
+                        android:paddingHorizontal="12dp"
+                        android:singleLine="true"
+                        android:text="101.1"
+                        android:textColor="#1E293B"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
+                </LinearLayout>
+
+                <!-- 演算子 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="演算子"
+                    android:textColor="#475569"
+                    android:textSize="13sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_calc_op"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="#F8FAFC" />
+
+                <!-- 第2項 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="第2項（進数 / 数値）"
+                    android:textColor="#475569"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/spinner_calc_base_b"
+                        android:layout_width="115dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="#F8FAFC" />
+
+                    <EditText
+                        android:id="@+id/edit_calc_b"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:background="#F8FAFC"
+                        android:imeOptions="actionDone"
+                        android:inputType="textVisiblePassword|textCapCharacters"
+                        android:paddingHorizontal="12dp"
+                        android:singleLine="true"
+                        android:text="A.8"
+                        android:textColor="#1E293B"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
+                </LinearLayout>
+
+                <!-- 出力進数 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="結果を表示する進数"
+                    android:textColor="#475569"
+                    android:textSize="13sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_calc_result_base"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="#F8FAFC" />
+
+                <TextView
+                    android:id="@+id/text_calc_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:minHeight="18dp"
+                    android:textColor="#EF4444"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btn_calc"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#0D9488"
+                    android:text="計算する"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <!-- 計算例ボックス -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="#F8FAFC"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="計算例"
+                        android:textColor="#334155"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="101.1₂ ＋ A.8₁₆ → 10000₂"
+                        android:textColor="#64748B"
+                        android:textSize="13sp"
+                        android:typeface="monospace" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="内部では浮動小数点数ではなく、有理数として計算します。"
+                        android:textColor="#64748B"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ==================== 結果・ステップ表示エリア ==================== -->
+            <LinearLayout
+                android:id="@+id/section_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F8FAFC"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:visibility="gone">
+
+                <!-- 結果カード（タップでコピー可能） -->
+                <LinearLayout
+                    android:id="@+id/card_final_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/text_result_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="結果"
+                        android:textColor="#64748B"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_final_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:textColor="#0D9488"
+                        android:textIsSelectable="true"
+                        android:textSize="32sp"
+                        android:textStyle="bold"
+                        android:typeface="monospace" />
+
+                    <TextView
+                        android:id="@+id/text_result_subtext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textColor="#94A3B8"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="（タップして結果をコピー）"
+                        android:textColor="#CBD5E1"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <!-- 計算のステップ見出し -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="計算のステップ"
+                    android:textColor="#1E293B"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/container_steps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
