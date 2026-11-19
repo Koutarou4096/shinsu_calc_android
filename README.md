@@ -8,4 +8,4 @@ ReleasesよりAPKをダウンロードできますが、**現時点でのダウ�
 
 ### 制作環境・検証環境
 - Android Studio Meerkat | 2024.3.1 Patch 1
-- Xiaomi Redmi Pad SE
+- Xiaomi Redmi Pad SE (HyperOS2 / Android 15)
